@@ -51,6 +51,7 @@
 
                 let calculateSpeed = Math.round((this.max - this.min) * this.targetDifference)
 
+                calculateSpeed = calculateSpeed + Number(this.min);
                 if (calculateSpeed < this.min)
                     calculateSpeed = this.min
 
@@ -67,7 +68,6 @@
 
                 let railOffset = event.offsetX + this.$refs.container.offsetLeft
 
-                console.log(event)
 
                 this.targetDifference = ((((railOffset - this.$refs.container.offsetLeft) / this.$refs.container.offsetWidth)).toFixed(2))
 
@@ -82,6 +82,7 @@
 
             stopSlide (event) {
 
+                console.log(event)
                 this.sliding = false
             },
         },
