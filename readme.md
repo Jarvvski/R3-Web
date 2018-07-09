@@ -4,6 +4,8 @@ composer install
 
 php artisan key:generate
 
+php artisan migrate:install
+
 php artisan migrate
 
 npm run dev
