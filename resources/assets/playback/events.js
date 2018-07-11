@@ -155,8 +155,11 @@ class PlaybackEvents {
 
             victimOnMap.layer.setOpacity(0.4)
 
-            let tooltip = victimOnMap.layer.getTooltip().getElement()
-            tooltip.style.opacity = 0.4
+            let tooltip = victimOnMap.layer.getTooltip();
+            if(tooltip) {
+                let tooltipElement = tooltip.getElement()
+                tooltipElement.style.opacity = 0.4
+            }
         }
 
         // If an AI was killed by a player or vice versa show notification
@@ -167,7 +170,7 @@ class PlaybackEvents {
 
         // Position is used to focus on the victim if the event is clicked and
         // we time travel to focus on the event
-        let position = victim.layer.getLatLng()
+        let position = victimOnMap ? victim.layer.getLatLng() : null;
         let entityId = (victim.isPlayer)? victim.entity_id : attacker.entity_id
 
         let victimName = (victim.isPlayer)? victim.name : victim.class

@@ -145,11 +145,14 @@ class Infantry {
         if (!this.layer.hasLayer(entity.layer)) {
             this.layer.addLayer(entity.layer)
 
-            let tooltip = entity.layer.getTooltip().getElement()
-            if (posData.is_dead == '1')
-                tooltip.style.opacity = 0.4
-            else
-                tooltip.style.opacity = 1
+            let tooltip = entity.layer.getTooltip();
+            if(tooltip != null) {
+                let toolTipElement = tooltip.getElement()
+                if (posData.is_dead == '1')
+                    toolTipElement.style.opacity = 0.4
+                else
+                    toolTipElement.style.opacity = 1
+            }
         }
 
         // Store when we last moved this unit so we can decide to clean up later
