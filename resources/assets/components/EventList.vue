@@ -64,14 +64,9 @@
 
                 console.log('Deleting messages after', missionTime)
 
-                _each(this.messages, (message, index) => {
-
-                    if (!message)
-                        return
-
-                    if (message.missionTime > missionTime)
-                        this.messages.splice(index, 1)
-                })
+                this.messages = this.messages.filter((message, index, array) => {
+                    return message.missionTime < missionTime;
+                });
             })
         },
 
