@@ -65,7 +65,7 @@
         </container>
 
         <container>
-            <div v-if="loading">
+            <div v-if="loading && playerId">
                 <loader inline="true"></loader>
                 <div>Fetching your stats...</div>
             </div>
@@ -134,24 +134,27 @@
 
                 console.log('Fetching player stats', this.playerId)
 
-                axios.get(`/stats/player/${this.playerId}`)
-                    .then(response => {
+                if(this.playerId) {
+                    axios.get(`/stats/player/${this.playerId}`)
+                        .then(response => {
 
-                        console.log('Got player stats', response.data)
-                        this.loading = false
+                            console.log('Got player stats', response.data)
+                            this.loading = false
 
-                        if (!response.error) {
-                            this.validPlayer = true
-                            this.$store.commit('setStatsMe', response.data)
-                        } else {
+                            if (!response.error) {
+                                this.validPlayer = true
+                                this.$store.commit('setStatsMe', response.data)
+                            } else {
+                                this.validPlayer = false
+                            }
+                        })
+                        .catch(error => {
+                            console.error(error)
+                            this.loading = false
                             this.validPlayer = false
-                        }
-                    })
-                    .catch(error => {
-                        console.error(error)
-                        this.loading = false
-                        this.validPlayer = false
-                    })
+                        })
+                }
+
             },
 
             updateChangePlayerId (change) {
