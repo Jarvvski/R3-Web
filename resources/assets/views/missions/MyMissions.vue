@@ -26,6 +26,12 @@
                 :noData="noPlayerMissions">
             </table-list-missions>
         </container>
+        <feedback
+                v-if="emptyData"
+                type="information"
+                class="margin__top--medium">
+            <span slot="message" v-html="$t('no-player-missions', { unitName: unitName })"></span>
+        </feedback>
 
         <player-id @changePlayerId="updateChangePlayerId"></player-id>
 
@@ -37,6 +43,7 @@
     import axios from 'http'
     import _each from 'lodash.foreach'
     import { ucfirst } from 'filters'
+    import Feedback from 'components/Feedback.vue'
 
     import ListSearch from 'components/ListSearch.vue'
     import Container from 'components/Container.vue'
@@ -49,6 +56,7 @@
             ListSearch,
             TableListMissions,
             PlayerId,
+            Feedback
         },
 
         data () {
@@ -66,6 +74,14 @@
                 'playerId',
                 'missions'
             ]),
+
+            unitName () {
+                return this.$store.state.settings.unitName
+            },
+
+            emptyData() {
+                return this.missions != null && this.missions.length === 0 && this.playerId
+            },
 
             listData () {
 

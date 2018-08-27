@@ -181,6 +181,45 @@ class MissionController extends Controller
         }
     }
 
+    /**
+     * @SWG\Get(
+     *     tags={"Missions"},
+     *     path="/missions/delete/{missionId}",
+     *     summary="Delete mission by Id",
+     *     description="Delete mission by Id",
+     *     @SWG\Parameter(
+     *         description="Id of mission to delete",
+     *         in="path",
+     *         name="missionId",
+     *         required=true,
+     *         type="integer",
+     *         format="int64"
+     *     ),
+     *     @SWG\Response(
+     *         response=200,
+     *         description="empty response indicating success"
+     *     ),
+     *     @SWG\Response(
+     *         response="403",
+     *         description="No User or user is not admin"
+     *     )
+     * )
+     */
+    public function delete(Request $request, $id)
+    {
+        if(!$request->user()->admin) {
+            return response()->json(['error' => 'Not Allowed'], 403);
+        }
+        $mission = DB::table('missions')
+                    ->delete($id);
+
+        if($mission) {
+            return response()->json();
+        } else {
+            return response()->json(['error' => 'Not Found'], 404);
+        }
+    }
+
     public static function missionFinished($missionId)
     {
         $getLastMissionEvent = DB::table('missions')

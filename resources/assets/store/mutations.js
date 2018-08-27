@@ -2,7 +2,7 @@ import Vue from 'vue'
 
 export const state = {
     settings: {},
-    missions: [],
+    missions: null,
     preference: {
         locale: {
             label: 'English',

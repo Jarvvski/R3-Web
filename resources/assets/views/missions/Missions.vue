@@ -44,24 +44,18 @@
         props: ['error'],
 
         data () {
-
             return {
                 errorFeedback: this.error,
-                fetchTimer: null,
             }
         },
 
         mounted () {
 
             console.log('Missions mounted', this.error)
+            this.fetchMissions()
 
-            this.startFetchTimer();
         },
 
-        beforeDestroy () {
-
-            this.stopFetchTimer();
-        },
 
         computed: {
 
@@ -75,20 +69,9 @@
         },
 
         methods: {
-
-            startFetchTimer () {
-
-                this.fetchMissions()
-                this.fetchTimer = setInterval(this.fetchMissions, 5000)
-            },
-
-            stopFetchTimer () {
-
-                this.fetchTimer && clearInterval(this.fetchTimer)
-            },
-
             fetchMissions () {
 
+                this.$store.commit("setMissionList", null);
                 axios.get('/missions')
                     .then(response => {
 

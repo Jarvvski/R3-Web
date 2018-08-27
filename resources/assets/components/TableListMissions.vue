@@ -35,28 +35,27 @@
                         </span>
 
                     </td>
+                    <td
+                            v-if="showDelete"
+                        >
+                        <div
+                                @click="deleteMission"
+                                :data-url="entry.id"
+                        >DELETE</div>
+                    </td>
 
                 </tr>
 
-                <tr v-if="waitingForData" v-for="n in 10"  class="table-list__row table-list__row--empty">
-                    <td :colspan="columns.length" class="table-list__item table-list__item--loading">L</td>
+                <tr v-if="!waitingForData && emptyData" v-for="n in 1" class="table-list__row">
+                    <td :colspan="columns.length" class="table-list__item">There's no missions here</td>
                 </tr>
             </tbody>
         </table>
-
-        <!-- TODO: Stop no missions flash from showing before ajax return -->
-        <feedback
-            v-if="noData"
-            type="information"
-            class="margin__top--medium">
-            <span slot="message" v-html="$t('no-player-missions', { unitName: unitName })"></span>
-        </feedback>
     </div>
 </template>
 
 <script>
     import TableList from 'components/TableList.vue'
-    import Feedback from 'components/Feedback.vue'
 
     import router from 'routes'
     import { ucfirst } from 'filters'
@@ -67,14 +66,15 @@
 
         components: {
             TableList,
-            Feedback
         },
 
         props: {
             data: Array,
             columns: Array,
             filterKey: String,
-            noData: Boolean
+            noData: Boolean,
+            showDelete:Boolean,
+            onDelete:Function
         },
 
         data () {
@@ -111,7 +111,14 @@
                 console.log('loading mission', event.currentTarget.getAttribute('data-url'))
 
                 //router.push({ path: 'playback', query: { plan: 'private' }})
-                router.push({ path: event.currentTarget.getAttribute('data-url'), query: { test: 'testing' }})
+                router.push({ path: event.currentTarget.getAttribute('data-url')})
+            },
+
+            deleteMission (event) {
+
+                event.stopPropagation();
+                console.log('deleting mission', event.currentTarget.getAttribute('data-url'))
+                this.onDelete(event.currentTarget.getAttribute('data-url'));
             },
             ucfirst,
 
@@ -119,13 +126,15 @@
 
         computed: {
 
-            unitName () {
-                return this.$store.state.settings.unitName
-            },
 
             waitingForData () {
 
-                return this.filteredData.length == 0 && !this.noData
+                return this.noData
+            },
+
+            emptyData () {
+
+                return !this.noData && this.data.length === 0
             },
 
             filteredData () {

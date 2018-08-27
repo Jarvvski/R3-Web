@@ -23,6 +23,19 @@ let routes = [
         component: require('./views/Playback.vue')
     },
 
+
+    {
+        path: '/adminMissions/',
+        name: 'AdminMissions',
+        props: (route) => ({ urlData: route }),
+        component: require('./views/admin/AdminMissions.vue'),
+        children: [{
+            path: '',
+            name: 'missions.list',
+            component: require('./views/missions/MissionList.vue')
+        }]
+    },
+
     {
         path: '/stats',
         component: require('./views/stats/Stats.vue'),

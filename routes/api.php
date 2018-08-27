@@ -19,7 +19,9 @@ Route::group(['prefix' => 'settings'], function () {
 
 Route::group(['prefix' => 'missions'], function () {
     Route::get('/', 'MissionController@fetchAllVisible');
+    Route::get('/all', 'MissionController@fetchAll');
     Route::get('/{id}', 'MissionController@fetchOne')->middleware('checkMissionEnded');
+    Route::post('/delete/{id}', 'MissionController@delete')->middleware('auth:api');
 });
 
 Route::group(['prefix' => 'events', 'middleware' => 'checkMissionEnded'], function () {

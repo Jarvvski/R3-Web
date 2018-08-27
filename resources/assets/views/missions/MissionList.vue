@@ -10,7 +10,11 @@
         <table-list-missions
             :data="listData"
             :columns="listColumns"
-            :filter-key="searchQuery">
+            :filter-key="searchQuery"
+            :showDelete=showDelete
+            :onDelete=onDelete
+            :noData="noData"
+        >
         </table-list-missions>
     </container>
 </template>
@@ -24,6 +28,8 @@
     import { ucfirst } from 'filters'
 
     export default {
+
+        props: {showDelete:Boolean, onDelete:Function},
         components: {
             Container,
             ListSearch,
@@ -49,6 +55,10 @@
         },
 
         computed: {
+
+            noData() {
+                return this.$store.state.missions == null;
+            },
 
             listData () {
 
