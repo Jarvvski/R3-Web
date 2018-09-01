@@ -83,8 +83,7 @@ class MissionController extends Controller
         if($missionId)
             return DB::table('missions')
                 ->where('id', $missionId)
-                ->update(['hidden' => 1])
-                ->first();
+                ->update(['hidden' => 1]);
     }
 
     private function generateSlug($mission = null)
