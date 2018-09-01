@@ -36,6 +36,14 @@ let routes = [
         }]
     },
 
+
+    {
+        path: '/adminUsers/',
+        name: 'AdminUsers',
+        props: (route) => ({ urlData: route }),
+        component: require('./views/admin/UsersList.vue'),
+    },
+
     {
         path: '/stats',
         component: require('./views/stats/Stats.vue'),

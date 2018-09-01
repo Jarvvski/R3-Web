@@ -24,6 +24,13 @@ Route::group(['prefix' => 'missions'], function () {
     Route::post('/delete/{id}', 'MissionController@delete')->middleware('auth:api');
 });
 
+
+Route::group(['prefix' => 'users'], function () {
+    Route::get('/', 'UserController@fetch')->middleware('auth:api');
+    Route::post('/delete/{id}', 'UserController@delete')->middleware('auth:api');
+    Route::post('/toggleAdmin/{id}', 'UserController@toggleAdmin')->middleware('auth:api');
+});
+
 Route::group(['prefix' => 'events', 'middleware' => 'checkMissionEnded'], function () {
     Route::get('/{id}', 'EventController@fetchAllMissionEvents');
 });

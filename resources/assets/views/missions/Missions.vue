@@ -26,7 +26,6 @@
 
 <script>
     import axios from 'http'
-    import router from 'routes'
 
     import MainHeader from 'components/MainHeader.vue'
     import Tab from 'components/Tab.vue'
@@ -83,7 +82,7 @@
                         // If we've failed to get our mission data the first time
                         // lets tell the user something is wrong with the API
                         if (!this.$store.state.missions.length)
-                            this.errorFeedback = `Failed to fetch missions!`
+                            this.error = `Failed to fetch missions!`
 
                         console.log(error);
                     })

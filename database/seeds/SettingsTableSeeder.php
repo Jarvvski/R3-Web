@@ -14,7 +14,7 @@ class SettingsTableSeeder extends Seeder
     {
         DB::table('settings')->insert([
             'key' => 'unitName',
-            'value' => 'Unit Name'
+            'value' => 'Set this in the DB'
         ]);
 
         DB::table('settings')->insert([
